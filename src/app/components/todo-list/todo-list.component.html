@@ -1,0 +1,17 @@
+<app-new-todo></app-new-todo>
+
+<mat-selection-list #todolist class="todolist">
+    <mat-list-item *ngFor="let todo of todolist$ | async; let i = index" [ngClass]="{'crossed': todo.state === 'done'}">
+      <div class="row">
+          <div class="checkbox">
+            <mat-checkbox [checked]="todo.state === state.done" (change)="toggle(todo)"></mat-checkbox>
+          </div>
+          <div class="content" [routerLink]="['/todos', todo.id]">
+              <h3 matLine> {{todo.title}} </h3>
+              <p matLine>
+                <span *ngIf="todo.state === state.done">Crossed out</span>
+              </p>
+          </div>
+      </div>
+    </mat-list-item>
+</mat-selection-list>
