@@ -2,13 +2,15 @@ import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { Injectable } from '@angular/core';
 import { Todo } from '../todo';
 import { TodoState } from '../state.enum';
+import { Observable, of } from 'rxjs';
+import { HttpResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
-    const todos = [
+    const todos: Todo[] = [
       { id: 11, title: 'Dr Nice', description: 'llorem ipsum', state: TodoState.undone},
       { id: 12, title: 'Narco', description: 'llorem ipsum', state: TodoState.undone},
       { id: 13, title: 'Bombasto', description: 'llorem ipsum', state: TodoState.undone},
@@ -21,6 +23,16 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 20, title: 'Tornado', description: 'llorem ipsum', state: TodoState.done}
     ];
     return {todos};
+  }
+
+  patch(request: any): Observable<HttpResponse<Todo>> {
+    const body = {
+      id: request.id,
+      ...request.req.body
+    };
+    return of(new HttpResponse(
+      { status: 201, body }
+    ));
   }
 
   genId(todos: Todo[]): number {

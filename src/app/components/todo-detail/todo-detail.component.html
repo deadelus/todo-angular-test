@@ -1,9 +1,0 @@
-<mat-card class="todo-card" *ngIf="todo">
-    <mat-card-header>
-      <mat-card-title>{{ todo.title }}</mat-card-title>
-      <mat-card-subtitle *ngIf="todo.state === state.done">Crossed out</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      {{ todo.description }}
-    </mat-card-content>
-</mat-card>

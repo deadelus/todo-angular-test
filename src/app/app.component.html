@@ -5,4 +5,12 @@
   </h1>
 </div>
 
+<div *ngIf="loading">
+  <h1 style="text-align: center">{{ '...loading' }}</h1>
+</div>
+
+<div *ngIf="error">
+  <h1 style="text-align: center">{{ 'Une erreur est survenue' }}</h1>
+</div>
+
 <router-outlet></router-outlet>

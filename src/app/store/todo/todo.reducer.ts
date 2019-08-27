@@ -1,95 +1,115 @@
 import { Todo } from '../../todo';
-import { createReducer, on } from '@ngrx/store';
+import { Action, createReducer, on } from '@ngrx/store';
 import * as TodoActions from 'src/app/store/todo/todo.actions';
 
 export interface State {
   todolist: Todo[];
   todo: Todo;
+  loading: boolean;
   error: Error;
 }
 
-export const initialState: State = {
+export const InitialState: State = {
   todolist: [],
   todo: null,
   error: null,
+  loading: false
 };
 
-export const todoReducer = createReducer(
-  initialState,
+const reducer = createReducer(
+  InitialState,
+
   on(TodoActions.ErrorTodo, (state, { error }) => ({
     ...state,
-    todolist: initialState.todolist,
-    todo: initialState.todo,
-    error: error
-  })),
-  on(TodoActions.SortAllTodos, state => ({
-    ...state,
-    todolist: state.todolist.sort((a, b) => b.state - a.state)
-  })),
-  
-  on(TodoActions.GetAllTodos, state => ({ 
-    ...state 
-  })),
-  on(TodoActions.GetAllTodosSuccess, (state, todos: Todo[]) => ({
-    ...state,
-    todolist: todos
+    error,
+    loading: false
   })),
 
-  on(TodoActions.GetTodo, state => ({ 
-    ...state 
-  })),
-  on(TodoActions.GetTodoSuccess, (state, todo: Todo) => ({
+  on(TodoActions.SortAllTodos, (state) => {
+    const todolist = state.todolist.slice().sort((a, b) => b.state - a.state);
+    return {
+      ...state,
+      todolist
+    };
+  }),
+
+  on(TodoActions.GetAllTodos, state => ({
     ...state,
-    todo: todo
+    error: null,
+    loading: true
   })),
-/*
-  on(TodoActions.CreateTodo, state => ({ 
-    ...state 
-  })),
-  on(TodoActions.CreateTodoSuccess, (state, { todo, todolist }) => ({
+  on(TodoActions.GetAllTodosSuccess, (state, { todolist }) => ({
     ...state,
-    todo: todo,
-    todolist: todolist
+    todolist,
+    error: null,
+    loading: false
   })),
 
-  on(TodoActions.UpdateTodo, state => ({ 
-    ...state 
-  })),
-  on(TodoActions.UpdateTodoSuccess, (state, { todo, todolist }) => ({
+  on(TodoActions.GetTodo, state => ({
     ...state,
-    todo: todo,
-    todolist: todolist
+    todo: null,
+    error: null,
+    loading: true
+  })),
+  on(TodoActions.GetTodoSuccess, (state, { todo }) => ({
+    ...state,
+    todo,
+    error: null,
+    loading: false
   })),
 
-  on(TodoActions.DeleteTodo, (state, { todo }) => ({ 
+  on(TodoActions.CreateTodo, state => ({
     ...state,
-    todo: todo,
+    error: null,
+    loading: true
   })),
-  on(TodoActions.DeleteTodoSuccess, (state, { todo, todolist }) => ({
+  on(TodoActions.CreateTodoSuccess, (state, { todo }) => {
+    const todolist = state.todolist.slice();
+    todolist.unshift(todo);
+    return {
+      ...state,
+      error: null,
+      loading: false,
+      todolist
+    };
+  }),
+
+  on(TodoActions.UpdateTodo, state => ({
     ...state,
-    todo: todo,
-    todolist: todolist
-  }))
-  */
+    loading: true
+  })),
+  on(TodoActions.UpdateTodoSuccess, (state, { todo }) => {
+    const index     = state.todolist.findIndex(t => t.id === todo.id);
+    const todolist  = state.todolist.slice();
+    todolist[index] = todo;
+    return {
+      ...state,
+      todolist,
+      error: null,
+      loading: false
+    };
+  }),
+
+  on(TodoActions.DeleteTodo, (state, { todo }) => ({
+    ...state,
+    todo,
+    error: null,
+    loading: true,
+  })),
+  on(TodoActions.DeleteTodoSuccess, (state) => {
+    const todolist = state.todolist.slice().filter(t => t.id !== state.todo.id);
+    return {
+      ...state,
+      todolist,
+      todo: null,
+      error: null,
+      loading: false
+    };
+  })
 );
 
-
-    /**
-     * const todolist = state.todolist;
-        todolist.unshift(state.todo);
-     */
-
-    /**
-     * Update
-     * const index     = state.todolist.findIndex(todo => todo.id === action.payload.id);
-      const todolist  = state.todolist;
-      todolist[index] = action.payload;
-     */
-
-
-    /**
-     * Delete
-     *       const todolist = state.todolist.filter(todo => todo.id !== action.payload.id);
-
-     */
-
+export function todoReducer(
+  state: State | undefined,
+  action: Action) {
+  return reducer(state, action);
+}
