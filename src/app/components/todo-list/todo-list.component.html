@@ -1,5 +1,6 @@
 <mat-spinner *ngIf="isLoading$ | async" style="margin: auto"></mat-spinner>
 <div *ngIf="(isError$ | async) != true && (isLoading$ | async) != true">
+  <app-new-todo (newTodo)="createTodo($event)"></app-new-todo>
   <mat-selection-list #todolist class="todolist">
       <mat-list-item *ngFor="let todo of (todolist$ | async); let i = index" [ngClass]="{'crossed': todo.state === 'done'}">
         <div class="row">

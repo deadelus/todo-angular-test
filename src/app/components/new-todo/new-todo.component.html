@@ -1,0 +1,13 @@
+<div class="form-container" [formGroup]="form">
+    <mat-form-field [floatLabel]="'auto'">
+        <mat-label>Title</mat-label>
+        <input id="title" formControlName="title" matInput placeholder="Your todo title">
+    </mat-form-field>
+
+    <mat-form-field [floatLabel]="'auto'">
+        <mat-label>Description</mat-label>
+        <input id="description" formControlName="description" matInput placeholder="Your todo description">
+    </mat-form-field>
+
+    <button mat-button (click)="submit()" *ngIf="this.form.valid">Save</button>
+</div>

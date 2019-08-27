@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule, MatIconModule, MatProgressSpinnerModule } from '@angular/material';
 import { TodoListComponent } from './todo-list.component';
+import { NewTodoComponent } from '../new-todo/new-todo.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule, Store } from '@ngrx/store';
@@ -22,7 +23,7 @@ describe('TodoListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TodoListComponent ],
+      declarations: [ TodoListComponent, NewTodoComponent ],
       providers: [
         Store
       ],

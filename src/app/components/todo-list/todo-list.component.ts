@@ -45,4 +45,8 @@ export class TodoListComponent implements OnInit {
     };
     this.store.dispatch(TodoActions.UpdateTodo({todo: updatedTodo}));
   }
+
+  createTodo(todo: Todo): void {
+    this.store.dispatch(TodoActions.CreateTodo({ todo }));
+  }
 }

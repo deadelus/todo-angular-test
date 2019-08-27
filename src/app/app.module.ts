@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TodoListComponent } from './components/todo-list/todo-list.component';
 import { TodoDetailComponent } from './components/todo-detail/todo-detail.component';
+import { NewTodoComponent } from './components/new-todo/new-todo.component';
 
 import { MatListModule } from '@angular/material/list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -32,7 +33,8 @@ import { environment } from '../environments/environment';
   declarations: [
     AppComponent,
     TodoListComponent,
-    TodoDetailComponent
+    TodoDetailComponent,
+    NewTodoComponent
   ],
   imports: [
     BrowserModule,
