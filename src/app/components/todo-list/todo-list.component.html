@@ -6,7 +6,7 @@
             <div class="checkbox">
               <mat-checkbox [checked]="todo.state === state.done" (change)="updateTodo(todo)"></mat-checkbox>
             </div>
-            <div class="content">
+            <div class="content" [routerLink]="['/todos', todo.id]">
                 <h3 matLine> {{todo.title}} </h3>
                 <p matLine>
                   <span *ngIf="todo.state === state.done">Crossed out</span>

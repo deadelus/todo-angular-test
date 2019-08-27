@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TodoListComponent } from './components/todo-list/todo-list.component';
+import { TodoDetailComponent } from './components/todo-detail/todo-detail.component';
 
 import { MatListModule } from '@angular/material/list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -30,7 +31,8 @@ import { environment } from '../environments/environment';
 @NgModule({
   declarations: [
     AppComponent,
-    TodoListComponent
+    TodoListComponent,
+    TodoDetailComponent
   ],
   imports: [
     BrowserModule,
